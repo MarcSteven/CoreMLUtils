@@ -1,4 +1,5 @@
 import  numpy as np
+import  coremltools.proto.FeatureTypes_pb2 as ft
 def printTop5(resultsDict):
     # put probabilities and labels into their own lists
     probs = np.array(list(resultsDict.values()))
@@ -44,3 +45,8 @@ def convert_multiArray_to_image(feature,is_bgr= False):
             feature.type.imageType.colorSpace = ft.ImageFeatureType.RGB
     feature.type.imageType.width = width
     feature.type.imageType.height = height
+    
+def update_multiarray_to_float32(feature):
+    if feature.type.HasField("multiArrayType"):
+        feature.type.multiArrayType.dataType = ft.ArrayFeatureType.FLOAT32
+        
